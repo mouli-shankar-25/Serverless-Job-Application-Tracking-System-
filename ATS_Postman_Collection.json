@@ -1,0 +1,364 @@
+{
+	"info": {
+		"_postman_id": "b5c92473-1234-4567-8901-abcdef123456",
+		"name": "ATS Backend Portfolio",
+		"description": "Full API Test Suite including Recruiter, Candidate, and Hiring Manager roles.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. Recruiter Actions (Full Access)",
+			"item": [
+				{
+					"name": "Create Job",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{recruiter_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"company_id\": 1,\n    \"recruiter_id\": 1,\n    \"title\": \"Senior Cloud Architect\",\n    \"description\": \"Lead our serverless migration.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/jobs",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"jobs"
+							]
+						}
+					}
+				},
+				{
+					"name": "View Applicants for Job",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{recruiter_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/job-applications?job_id=1",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"job-applications"
+							],
+							"query": [
+								{
+									"key": "job_id",
+									"value": "1"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Trigger Workflow (Advance)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{recruiter_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"action\": \"Advance\",\n    \"new_stage\": \"Screening\",\n    \"candidate_email\": \"your_verified_email@example.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/applications/1/transition",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"applications",
+								"1",
+								"transition"
+							]
+						}
+					}
+				},
+				{
+					"name": "Update Job",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{recruiter_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Principal Cloud Architect\",\n    \"status\": \"closed\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/jobs/2",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"jobs",
+								"2"
+							]
+						}
+					}
+				},
+				{
+					"name": "Delete Job",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{recruiter_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/jobs/2",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"jobs",
+								"2"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "2. Candidate Actions",
+			"item": [
+				{
+					"name": "Apply for Job",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{candidate_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"job_id\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/apply",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"apply"
+							]
+						}
+					}
+				},
+				{
+					"name": "View My Applications",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{candidate_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/my-applications",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"my-applications"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "3. Hiring Manager (Restricted Access)",
+			"item": [
+				{
+					"name": "View Applicants (Allowed)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{hiring_manager_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/job-applications?job_id=1",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"job-applications"
+							],
+							"query": [
+								{
+									"key": "job_id",
+									"value": "1"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "SECURITY TEST: Create Job (Should Fail)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{hiring_manager_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"I should not be able to post this\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/jobs",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"jobs"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "4. Public Actions (No Auth)",
+			"item": [
+				{
+					"name": "List Jobs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/jobs",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"jobs"
+							]
+						}
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "api_url",
+			"value": "YOUR_API_URL",
+			"type": "string"
+		},
+		{
+			"key": "recruiter_token",
+			"value": "PASTE_RECRUITER_TOKEN_HERE",
+			"type": "string"
+		},
+		{
+			"key": "candidate_token",
+			"value": "PASTE_CANDIDATE_TOKEN_HERE",
+			"type": "string"
+		},
+		{
+			"key": "hiring_manager_token",
+			"value": "PASTE_HIRING_MANAGER_TOKEN_HERE",
+			"type": "string"
+		}
+	]
+
+}
