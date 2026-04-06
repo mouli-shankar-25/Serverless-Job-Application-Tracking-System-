@@ -419,6 +419,3 @@ Run these requests in order to generate all required IDs.
 
 ---
 
-### **Author**
-
-**Built by Sayyad Sameer**
